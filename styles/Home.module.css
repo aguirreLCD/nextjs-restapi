@@ -71,6 +71,10 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .card {
@@ -94,7 +98,8 @@
 
 .card h2 {
   margin: 0 0 1rem 0;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  text-align: center;
 }
 
 .card p {
@@ -106,6 +111,14 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+}
+
+.image {
+  max-width: 100%;
+  border-radius: 10%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 @media (max-width: 600px) {
