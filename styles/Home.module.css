@@ -104,7 +104,7 @@
 
 .card p {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 
@@ -125,5 +125,22 @@
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+}
+
+
+
+.search input {
+  margin-right: .5em;
+}
+@media (max-width: 600px) {
+  .search input {
+    margin-right: 0;
+    margin-bottom: .5em;
+  }
+
+  .search input,
+  .search button {
+    width: 100%;
   }
 }

@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 const defaultEndpoint = "https://swapi.dev/api/planets/";
 
@@ -74,7 +75,6 @@ export default function Home({ planets }) {
 
   function handleLoadMore() {
     // console.log(current);
-
     updatePage((previous) => {
       return {
         ...previous,
@@ -83,7 +83,26 @@ export default function Home({ planets }) {
     });
   }
 
-  // console.log("88", current);
+  // console.log("85", current);
+
+  function handleOnSubmitSearch(e) {
+    e.preventDefault();
+
+    const { currentTarget = {} } = e;
+
+    const fields = Array.from(currentTarget?.elements);
+
+    const fieldQuery = fields.find((field) => field.name === "query");
+
+    const value = fieldQuery.value || "";
+
+    const endpoint = `https://swapi.dev/api/planets/?search=${value}`;
+    const imgSearch = `${value}`;
+
+    updatePage({
+      current: endpoint,
+    });
+  }
 
   return (
     <div className={styles.container}>
@@ -98,22 +117,47 @@ export default function Home({ planets }) {
           The Star Wars API <code className={styles.code}>swapi.dev</code>
         </p>
 
+        <form className="search" onSubmit={handleOnSubmitSearch}>
+          <input name="query" type="search"></input>
+          <button>Search</button>
+        </form>
+
         <ul className={styles.grid}>
           {results.map((result) => {
-            const { created, name } = result;
+            const {
+              created,
+              name,
+              climate,
+              gravity,
+              terrain,
+              population,
+              rotation_period,
+              orbital_period,
+              diameter,
+              url,
+            } = result;
 
             return (
-              <li key={created} className={styles.card}>
-                <a href="https://nextjs.org/docs">
-                  <img
-                    className={styles.image}
-                    src={
-                      "https://images.pexels.com/photos/6320601/pexels-photo-6320601.jpeg"
-                    }
-                    alt={`${name}`}
-                  ></img>
-                  <h2>{name}</h2>
-                </a>
+              <li key={name} className={styles.card}>
+                <Link href={`/planets/${name}`}>
+                  <a>
+                    <img
+                      className={styles.image}
+                      src={
+                        "https://images.pexels.com/photos/6320601/pexels-photo-6320601.jpeg"
+                      }
+                      alt={`${name}`}
+                    ></img>
+                    <h2>{name}</h2>
+                    {/* <p>Climate: {climate}</p>
+                    <p>Gravity: {gravity}</p>
+                    <p>Rotation Period: {rotation_period}</p>
+                    <p>Orbital Period: {orbital_period}</p>
+                    <p>Diameter: {diameter}</p>
+                    <p>Terrain: {terrain}</p>
+                    <p>Population: {population}</p> */}
+                  </a>
+                </Link>
               </li>
             );
           })}
@@ -123,19 +167,6 @@ export default function Home({ planets }) {
           <button onClick={handleLoadMore}>Load More</button>
         </p>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            {/* <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} /> */}
-          </span>
-        </a>
-      </footer>
     </div>
   );
 }
